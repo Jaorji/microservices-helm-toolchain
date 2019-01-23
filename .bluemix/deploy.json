@@ -1,136 +1,114 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "messages": {
-        "$i18n": "locales.yml"
+      "$i18n": "locales.yml"
     },
     "title": {
-        "$ref": "#/messages/deploy.title"
+      "$ref": "#/messages/deploy.title"
     },
     "description": {
-        "$ref": "#/messages/deploy.description"
+      "$ref": "#/messages/deploy.description"
     },
     "longDescription": {
-        "$ref": "#/messages/deploy.longDescription"
+      "$ref": "#/messages/deploy.longDescription"
     },
     "type": "object",
     "properties": {
         "api-key": {
-            "description": "The IBM Cloud API key is used to access the IBM Container Service API and interact with the cluster. You can obtain your API key with 'ibmcloud iam api-key-create' or via the console at https://console.ng.bluemix.net/iam/#/apikeys by clicking **Create API key** (Each API key only can be viewed once).",
-            "type": "string",
-            "pattern": "\\S",
-            "$validate":{
-		   "method":"validateApiKey",
-		    "params":{"apiKey":"api-key"}
-	    }
+          "description": "The IBM Cloud API key is used to access the IBM Container Service API and interact with the cluster. You can obtain your API key with 'ibmcloud iam api-key-create' or via the console at https://console.ng.bluemix.net/iam/#/apikeys by clicking **Create API key** (Each API key only can be viewed once).",
+          "type": "string",
+          "pattern": "\\S",
+          "$validate":{
+            "method":"validateApiKey",
+            "params":{"apiKey":"api-key"}
+          }
         },
        "registry-region": {
-          "description": "The IBM Cloud region for image registry",
+          "description": "Region for container registry",
           "type": "string",
-            "$validate":{
-		      "method":"validateCSRegion",
-		      "params":{"apiKey":"api-key"}
-	       }
+          "$validate":{
+		    "method":"validateCSRegion",
+		    "params":{"apiKey":"api-key"}
+	      }
         },
        "registry-namespace": {
-          "description": "The namespace in the container image registry. You can set it up with {ibmcloud cr namespace-add]. Learn more at https://console.bluemix.net/docs/services/Registry/index.html .",
+          "description": "Namespace in container registry",
           "type": "string",
           "pattern": "^[a-z0-9][-_a-z0-9]{2,28}[a-z0-9]$",
           "$validate":{
-                "method":"validateCSNameSpace",
-                "params":{"region":"registry-region","apiKey":"api-key"}
-	    }
+            "method":"validateCSNameSpace",
+            "params":{"region":"registry-region","apiKey":"api-key"}
+	      }
         },
         "staging-region": {
-            "description": "The IBM Cloud region",
-            "type": "string",
-            "$validate":{
-		      "method":"validateCFRegion",
-		      "params":{"apiKey":"api-key"}
-	       }
+          "description": "Staging region",
+          "type": "string",
+          "$validate":{
+		    "method":"validateCSRegion",
+		    "params":{"apiKey":"api-key"}
+	      }
         },
-        "staging-organization": {
-            "description": "The IBM Cloud org",
-            "type": "string",
-            "$validate":{
-		       "method":"validateCFOrganization",
-		       "params":{"region":"staging-region","apiKey":"api-key"}
-	         }
-        },
-        "staging-space": {
-            "description": "The IBM Cloud space",
-            "type": "string",
-             "$validate":{
-		       "method":"validateCFSpace",
-		       "params":{"region":"staging-region","organization":"staging-organization","apiKey":"api-key"}
-	         }
+        "staging-resource-group": {
+          "description": "Staging resource group",
+          "type": "string",
+          "pattern": "\\S",
+          "$validate":{
+		    "method":"validateCSResourceGroup",
+		    "params":{"apiKey":"api-key"}
+	      }
         },
        "staging-cluster-name": {
-            "description": "The name of staging cluster. Retrieve it with [ibmcloud cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
-            "type": "string",
-            "pattern": "\\S",
-           "$validate":{
-                "method":"validateCSClusterName",
-                "params":{"region":"staging-region","apiKey":"api-key"}
-	    }
+          "description": "Name of staging cluster",
+          "type": "string",
+          "pattern": "\\S",
+          "$validate":{
+            "method":"validateCSClusterName",
+            "params":{"region":"staging-region","apiKey":"api-key"}
+	      }
         },
         "staging-cluster-namespace": {
-          "description": "Staging namespace",
+          "description": "Namespace in staging cluster",
           "type": "string",
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
-          "$validate":{
-                "method":"validateCSNameSpace",
-                "params":{"region":"staging-region","apiKey":"api-key"}
-	    }
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
         },
         "prod-region": {
-            "description": "The IBM Cloud region for prod deployment",
-            "type": "string",
-             "$validate":{
-		          "method":"validateCFRegion",
-		          "params":{"apiKey":"api-key"}
-	          }
+          "description": "Production region",
+          "type": "string",
+          "$validate":{
+		    "method":"validateCSRegion",
+		    "params":{"apiKey":"api-key"}
+	      }
         },
-        "prod-organization": {
-            "description": "The IBM Cloud org",
-            "type": "string",
-             "$validate":{
-		         "method":"validateCFOrganization",
-		         "params":{"region":"prod-region","apiKey":"api-key"}
-	        }
-        },
-        "prod-space": {
-            "description": "The IBM Cloud space",
-            "type": "string",
-             "$validate":{
-		           "method":"validateCFSpace",
-		           "params":{"region":"prod-region","organization":"prod-organization","apiKey":"api-key"}
-	         }
+        "prod-resource-group": {
+          "description": "Production resource-group",
+          "type": "string",
+          "pattern": "\\S",
+          "$validate":{
+		    "method":"validateCSResourceGroup",
+		    "params":{"apiKey":"api-key"}
+	      }
         },              
        "prod-cluster-name": {
-            "description": "The name of staging cluster. Retrieve it with [ibmcloud cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
-            "type": "string",
-            "pattern": "\\S",
-           "$validate":{
-                "method":"validateCSClusterName",
-                "params":{"region":"prod-region","apiKey":"api-key"}
-	    }
+          "description": "Name of production cluster",
+          "type": "string",
+          "pattern": "\\S",
+          "$validate":{
+            "method":"validateCSClusterName",
+            "params":{"region":"prod-region","apiKey":"api-key"}
+	      }
         },
         "prod-cluster-namespace": {
-          "description": "Prod namespace",
+          "description": "Namespace in production cluster",
           "type": "string",
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
-	  "$validate":{
-	    "method":"validateCSNameSpace",
-	    "params":{"region":"prod-region","apiKey":"api-key"}
-	    }
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
         },    
         "umbrella-app-name": {
-            "description": {
-                "$ref": "#/messages/deploy.umbrellaAppDescription"
-            },
-            "type": "string",
-            "pattern": "\\S",
-            "maxLength": 63
+          "description": {
+              "$ref": "#/messages/deploy.umbrellaAppDescription"
+          },
+          "type": "string",
+          "pattern": "\\S",
+          "maxLength": 63
         }
     },
     "required": [
@@ -138,13 +116,11 @@
         "registry-region",
         "registry-namespace",
         "staging-region",
-        "staging-organization",
-        "staging-space",
+        "staging-resource-group",
         "staging-cluster-name",
         "staging-cluster-namespace",        
         "prod-region",
-        "prod-organization",
-        "prod-space",
+        "prod-resource-group",
         "prod-cluster-name",
         "prod-cluster-namespace",
         "umbrella-app-name"
@@ -152,7 +128,7 @@
     "form": [
         {
             "type": "validator",
-            "url": "/devops/setup/bm-helper/helper.html"
+            "url": "/devops/setup/bm-helper/custom_helper.html"
         },
         {
             "type": "text",
@@ -167,7 +143,15 @@
             "readonly": false,
             "title": "IBM Cloud API key",
             "key": "api-key"
-        },           
+        },
+        {
+            "type": "label",
+            "title": ""
+        },
+        {
+            "type": "label",
+            "title": "**Container image registry:**"
+        },
         {
           "type": "table",
           "columnCount": 3,
@@ -184,41 +168,36 @@
                   "title": "Container registry namespace"
                 },{
                   "type": "select",
-                  "title": "Container image registry region",
-                  "key": "registry-region",
-                   "options":{
-                        "$populate":{
-                        "method":"populateCSRegions",
-                         "params":{"apiKey":"api-key"}
-                            }
-                        }
+                  "title": "Container registry region",
+                  "key": "registry-region"
                 },{
                   "type": "label",
                   "title": ""
                 },{
-                  "type": "select",
+                  "type": "text",
                   "readonly": false,
-                  "title": "Container image registry namespace",
-                  "key": "registry-namespace",
-                   "options":{
-                       "$populate":{
-                          "method": "populateCSNameSpaces",
-                          "params": {"region":"registry-region","apiKey":"api-key"}
-                           }
-	                }
+                  "title": "Container registry namespace",
+                  "key": "registry-namespace"
                 }
             ]
-        },     
+        },    
+        {
+            "type": "label",
+            "title": ""
+        },
+        {
+            "type": "label",
+            "title": "**Environments:**"
+        },
         {
             "type": "table",
-            "columnCount": 4,
-            "widths": [
-                "15%",
-                "28%",
-                "28%",
-                "28%"
-            ],
+            "columnCount": 9,
+            "widths": [ "12%", "1%", "21%", "1%", "21%", "1%", "21%", "1%", "21%" ],
             "items": [
+                {
+                    "type": "label",
+                    "title": ""
+                },
                 {
                     "type": "label",
                     "title": ""
@@ -231,9 +210,27 @@
                 },
                 {
                     "type": "label",
+                    "title": ""
+                },
+                {
+                    "type": "label",
+                    "title": {
+                        "$ref": "#/messages/clusterResourceGroup"
+                    }
+                },
+                {
+                    "type": "label",
+                    "title": ""
+                },
+                {
+                    "type": "label",
                     "title": {
                         "$ref": "#/messages/clusterName"
                     }
+                },
+                {
+                    "type": "label",
+                    "title": ""
                 },
                 {
                     "type": "label",
@@ -248,65 +245,37 @@
                     }
                 },
                 {
-                  "type": "select",
-                  "key": "staging-region",
-                  "options":{
-                     "$populate":{
-                        "method":"populateCFRegions",
-                        "params":{"apiKey":"api-key"}
-                           }
-                    }
+                    "type": "label",
+                    "title": ""
                 },
                 {
                   "type": "select",
-                  "key": "staging-cluster-name",
-                  "readonly": false,
-                  "options":{
-                       "$populate":{
-                        "method": "populateCSClusterNames",
-                        "params": {"region":"registry-region","apiKey":"api-key"}
-                           }
-                    }
-                },
-                {
-                  "type": "text",
-                  "key": "staging-cluster-namespace",
-                  "readonly": false,
-		  "options":{
-                       "$populate":{
-                          "method": "populateCSNameSpaces",
-                          "params": {"region":"registry-region","apiKey":"api-key"}
-                           }
-                    }
+                  "key": "staging-region"
                 },
                 {
                     "type": "label",
                     "title": ""
                 },
                 {
+                  "type": "select",
+                  "key": "staging-resource-group"
+                },
+                {
                     "type": "label",
-                    "title": "Service CF org & space"
+                    "title": ""
                 },
                 {
-                    "type": "select",
-                    "key": "staging-organization",
-                    "options":{
-                        "$populate":{
-                        "method": "populateCFOrganizations",
-                        "params": {"region":"staging-region","apiKey":"api-key"}
-                         }
-                    }
+                  "type": "select",
+                  "key": "staging-cluster-name",
                 },
                 {
-                    "type": "select",
-                    "key": "staging-space",
-                    "readonly": false,
-                     "options":{
-                            "$populate":{
-                            "method": "populateCFSpaces",
-                            "params": {"organization":"staging-organization","region":"staging-region","apiKey":"api-key"}
-                            }
-                        }
+                    "type": "label",
+                    "title": ""
+                },
+                {
+                  "type": "text",
+                  "key": "staging-cluster-namespace",
+                  "readonly": false
                 },
                 {
                     "type": "label",
@@ -315,71 +284,44 @@
                     }
                 },
                 {
-                  "type": "select",
-                  "key": "prod-region",
-                   "options":{
-                       "$populate":{
-                       "method":"populateCFRegions",
-                        "params":{"apiKey":"api-key"}
-                        }
-                    }
+                    "type": "label",
+                    "title": ""
                 },
                 {
                   "type": "select",
-                  "key": "prod-cluster-name",
-                  "readonly": false,
-                   "options":{
-                       "$populate":{
-                        "method": "populateCSClusterNames",
-                        "params": {"region":"registry-region","apiKey":"api-key"}
-                           }
-                   }   
-                },
-                {
-                  "type": "text",
-                  "key": "prod-cluster-namespace",
-                  "readonly": false,
-		   "options":{
-                       "$populate":{
-                          "method": "populateCSNameSpaces",
-                          "params": {"region":"registry-region","apiKey":"api-key"}
-                           }
-                     }
+                  "key": "prod-region"
                 },
                 {
                     "type": "label",
                     "title": ""
                 },
                 {
+                  "type": "select",
+                  "key": "prod-resource-group"
+                },
+                {
                     "type": "label",
-                    "title": "Service CF org & space"
+                    "title": ""
                 },
                 {
-                    "type": "select",
-                    "key": "prod-organization",
-                    "options":{
-                        "$populate":{
-                        "method": "populateCFOrganizations",
-                        "params": {"region":"prod-region","apiKey":"api-key"}
-                         }
-                    }
+                  "type": "select",
+                  "key": "prod-cluster-name",
                 },
                 {
-                    "type": "select",
-                    "key": "prod-space",
-                    "readonly": false,
-                    "options":{
-                        "$populate":{
-                        "method": "populateCFSpaces",
-                        "params": {"organization":"prod-organization","region":"prod-region","apiKey":"api-key"}
-                        }
-                    }
+                    "type": "label",
+                    "title": ""
+                },
+                {
+                  "type": "text",
+                  "key": "prod-cluster-namespace",
+                  "readonly": false
                 }
             ]
-        },{
+        },
+        {
           "type": "table",
           "columnCount": 2,
-            "widths": ["15%", "80%"],
+            "widths": ["10%", "85%"],
             "items": [
                 {
                   "type": "label",
@@ -392,7 +334,7 @@
         },{
           "type": "table",
           "columnCount": 2,
-            "widths": ["15%", "80%"],
+            "widths": ["10%", "85%"],
             "items": [
                 {
                   "type": "label",
