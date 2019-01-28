@@ -256,7 +256,7 @@
                   "options":{
                        "$populate":{
                         "method": "populateCSClusterNames",
-                        "params": {"region":"registry-region","apiKey":"api-key"}
+                        "params": {"region":"staging-region","apiKey":"api-key"}
                            }
                     }
                 },
@@ -317,7 +317,7 @@
                    "options":{
                        "$populate":{
                         "method": "populateCSClusterNames",
-                        "params": {"region":"registry-region","apiKey":"api-key"}
+                        "params": {"region":"prod-region","apiKey":"api-key"}
                            }
                    }   
                 },
