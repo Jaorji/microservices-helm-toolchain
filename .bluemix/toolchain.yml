@@ -189,9 +189,7 @@ services:
 form:
   pipeline:
     parameters:
-      staging-space: staging
       staging-cluster-namespace: staging
-      prod-space: prod
       prod-cluster-namespace: prod
       umbrella-app-name: '{{services.umbrella-repo.parameters.repo_name}}'
     schema:
